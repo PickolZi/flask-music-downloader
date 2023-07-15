@@ -1,4 +1,5 @@
 from spotdl import Spotdl
+
 import os
 
 SPOT_URL = "https://open.spotify.com/track/4IOxk5ep5ONrdlL0ZIy64v?si=5ec15380afb543c9"
@@ -18,5 +19,5 @@ def download_playlist_by_url(player, url):
 
 
 # download_song_by_url(player, SPOT_URL)
-download_playlist_by_url(player, SPOT_PLAYLIST)
+# download_playlist_by_url(player, SPOT_PLAYLIST)
 
