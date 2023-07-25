@@ -2,11 +2,10 @@ import os
 from celery import shared_task
 from spotdl import Spotdl
 
-SPOT_URL = "https://open.spotify.com/track/4IOxk5ep5ONrdlL0ZIy64v?si=5ec15380afb543c9"
-SPOT_PLAYLIST = "https://open.spotify.com/playlist/3qfCNtFo7EQTBDXzCqExS1"
 
 CLIENT_ID = os.environ.get("SPOTIFY_KEY")
 CLIENT_SECRET = os.environ.get("SPOTIFY_SECRET")
+
 player = Spotdl(CLIENT_ID, CLIENT_SECRET)
 
 @shared_task(bind=True)

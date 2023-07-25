@@ -1,0 +1,5 @@
+1. Run Flask server
+2. Run Redis database
+	- docker compose up (using the docker-compose.yml)
+3. Run the celery worker
+	- celery -A run.celery worker -l INFO --pool=solo
