@@ -9,7 +9,10 @@ def create_app():
 
     app.config["SECRET_KEY"] = os.environ.get("SPOTIFY_FLASK_SECRET_KEY")
     app.config["CELERY_CONFIG"] = {"broker_url": "redis://localhost:6379/0", "result_backend": "redis://localhost:6379/0"}
-    # https://open.spotify.com/track/3IelG5zYpWWCZIH4cqWlPV?si=54bebe2ff4984fe7
+
+    cur_path = app.root_path
+    parent_path = os.path.abspath(os.path.join(cur_path, '..'))  # Gets Parent directory
+    app.config["SONG_LOCATION"] = parent_path
 
     celery = make_celery(app)
     celery.set_default()
