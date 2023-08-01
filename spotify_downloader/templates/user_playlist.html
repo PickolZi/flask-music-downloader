@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>{{ user.display_name }}</h1>
+    {% if user.images != [] %}
+        <img src="{{user.images[1].url}}" alt="Spotify user's image">
+    {% else %}
+        <img src="https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651" alt="Spotify user's image" width="300px">
+    {% endif %}
+    <h2>Spotify Profile: <a href="{{ user.external_urls.spotify }}" target="_blank">{{ user.external_urls.spotify }}</a></h2>
+    <h3>Followers: {{ user.followers.total }}</h3>
+
+    <h1>Playlist:</h1>
+    <h1>Playlist Title: {{ playlist.name }}</h1>
+    <img src="{{ playlist.images[0].url }}" alt="Playlist image" width="300px">
+    <hr>
+    
+    {% for song in playlist.tracks['items'] if song.track.name != ""%}
+        <p></p>
+        <img src="{{ song.track.album.images[-1].url}}" alt="Song image">
+        <h3>Song: {{ song.track.name }}</h3>
+        <h3>Artist(s): 
+            {% for artist in song.track.album.artists %} 
+                {% if artist == song.track.album.artists[-1] %}
+                    {{ artist.name }} 
+                {% else %}
+                    {{ artist.name }} | 
+                {% endif %}
+            {% endfor %}
+        </h3>
+        <h3>Album: {{ song.track.album.name }}</h3>
+        <h3>Added at: {{ song.added_at }}</h3>
+        <h3>Song length: {{ (song.track.duration_ms // 1000) // 60 }}:{{(song.track.duration_ms // 1000) % 60 }}</h3>
+        <h3>Spotify Link: <a href="{{ song.track.external_urls.spotify }}" target="_blank">{{ song.track    .external_urls.spotify }}</a></h3>
+        <a href="/download/{{ song.track.id }}">Download Song</a>
+        <hr>
+    {% endfor %}
+
+    
+{% endblock content %}  

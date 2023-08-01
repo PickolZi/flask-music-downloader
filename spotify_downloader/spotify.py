@@ -5,6 +5,7 @@ from spotdl import Spotdl
 CLIENT_ID = os.environ.get("SPOTIFY_KEY")
 CLIENT_SECRET = os.environ.get("SPOTIFY_SECRET")
 
+
 player = Spotdl(CLIENT_ID, CLIENT_SECRET)
 
 @shared_task(bind=True)
@@ -20,8 +21,6 @@ def download_playlist_by_url(url):
     songs = player.search([SPOT_PLAYLIST])
     player.download_songs(songs)
 
-# download_song_by_url(player, SPOT_URL)
-# download_playlist_by_url(player, SPOT_PLAYLIST)
 
 if __name__ == "__main__":
     results = download_song_by_url("Typa Girl")
