@@ -1,24 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>{{ user.display_name }}</h1>
-    {% if user.images != [] %}
-        <img src="{{user.images[1].url}}" alt="Spotify user's image">
-    {% else %}
-        <img src="https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651" alt="Spotify user's image" width="300px">
-    {% endif %}
-    <h2>Spotify Profile: <a href="{{ user.external_urls.spotify }}" target="_blank">{{ user.external_urls.spotify }}</a></h2>
-    <h3>Followers: {{ user.followers.total }}</h3>
 
-    <h1>Playlists:</h1>
+    <div class="content">
+
+        <!-- Main content with user songs -->
+        <div class="main secondary">
+            {% if page == "user" %}
+                <div class="main-image">
+                    {% if user.images != [] %}
+                        <img src="{{user.images[1].url}}" alt="Spotify user's image" width="300px">
+                    {% else %}
+                        <img src="https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651" alt="Spotify user's image" width="300px">
+                    {% endif %}
+
+                    <div class="main-info">
+                        <h1><a href="{{ user.external_urls.spotify }}" target="_blank">{{ user.display_name[0] | upper }}{{ user.display_name[1:] }}</a></h1>
+                        <h3>Followers: {{ user.followers.total }}</h3>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Playlist content -->
+            {% block playlist %}
+            {% endblock playlist %}
+        </div>
     
-    <!-- <p>{{ playlist }}</p> -->
-    {% for playlist in playlists %}
-        <img src="{{ playlist.images[-1].url }}" alt="Playlist image" width="60px">
-        
-        <h2>Playlist: {{ playlist.name }}</h2>
-        <h3>Spotify Link: <a href="{{ playlist.external_urls.spotify }}" target="_blank">{{ playlist.external_urls.spotify }}</a></h3>
-        <a href="/user/{{user.id}}/playlist/{{ playlist.id }}">Download Songs</a>
-        <hr>
-    {% endfor %}
+        <!-- Side bar with playlists -->
+        <div class="playlists secondary scrollbar">
+            <div class="users-playlists">
+                <form method="POST">
+                    {{ form.csrf_token }}
+                    User: {{ form.user(class_="accent") }}
+                    <!-- <input type="text" class="accent" placeholder="Enter Username"> -->
+                </form>
     
+                <h2>{{ user.display_name[0] | upper }}{{ user.display_name[1:] }}'s playlist(s): </h2>
+    
+                <hr>
+            </div>
+
+            {% for playlist in playlists %}
+            <a href="/user/{{user.id}}/playlist/{{ playlist.id }}">
+                <div class="playlist">
+                    {% if playlist.images != [] %}
+                        <img src="{{ playlist.images[-1].url }}" alt="Playlist image" width="60px" height="60px">
+                    {% else %}
+                        <img src="https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=v2" alt="Playlist image" width="60px" height="60px">
+                    {% endif %}
+                    <h3><a href="{{ playlist.external_urls.spotify }}" target="_blank">{{ playlist.name }}</a></h3>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
 {% endblock content %}  

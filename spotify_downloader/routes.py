@@ -1,7 +1,7 @@
 import os
 
-from flask import Flask, render_template, request, Blueprint, send_from_directory, current_app, send_file
-from spotify_downloader.forms import SpotifySongDownloadForm
+from flask import Flask, render_template, request, Blueprint, send_from_directory, current_app, request, redirect, url_for
+from spotify_downloader.forms import SpotifySongDownloadForm, SpotifyGetUser, SpotifySongs
 from spotify_downloader import spotify
 from spotify_downloader.spotify_api import sp
 
@@ -23,19 +23,33 @@ def home():
 
     return render_template("index.html", text="Home Page!", form=form)
 
-@main.route("/user/<string:user_id>")
+@main.route("/user/<string:user_id>", methods=["POST", "GET"])
 def user(user_id):
     user = sp.user(user_id)
     playlists = sp.user_playlists(user_id)['items']
 
-    return render_template("user.html", title="Users", user=user, playlists=playlists)
+    form = SpotifyGetUser()
+    if form.validate_on_submit():
+        return redirect(url_for('main.user', user_id=form.user.data))
 
-@main.route("/user/<string:user_id>/playlist/<string:playlist_id>")
+    return render_template("user.html", form=form, title="Users", user=user, playlists=playlists, page="user")
+
+@main.route("/user/<string:user_id>/playlist/<string:playlist_id>", methods=["POST", "GET"])
 def user_playlist(user_id, playlist_id):
     user = sp.user(user_id)
+    playlists = sp.user_playlists(user_id)['items']
     playlist = sp.user_playlist(user=user_id, playlist_id=playlist_id)
 
-    return render_template("user_playlist.html", user=user, playlist=playlist)
+    form = SpotifyGetUser()
+    if form.validate_on_submit():
+        return redirect(url_for('main.user', user_id=form.user.data))
+
+    bool_form = SpotifySongs()
+    if bool_form.validate_on_submit():
+        print(f"Bool data: {bool_form.selection.data}")
+
+
+    return render_template("user_playlist.html", form=form, bool_form=bool_form, title="playlist", user=user, playlists=playlists, playlist=playlist, page="playlist")
 
 @main.route("/download/<string:song_id>", methods=["GET"])
 def download_song(song_id): 
