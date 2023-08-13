@@ -2,7 +2,6 @@
 {% block playlist %}
 
     <form method="POST" class="songs-form">
-        {{  bool_form.csrf_token }}
         <div class="main-content scrollbar">
             <div class="main-image">
                 {% if playlist.images != [] %}
@@ -32,7 +31,7 @@
                 {% for song in playlist.tracks['items'] if song.track.name != ""%}
                     <div class="song">
                         <div class="checkbox-image">
-                            {{ bool_form.selection }}
+                            <input type="checkbox" name="song_choice" value="{{song.track.id}}">
                             <img src="{{ song.track.album.images[-1].url}}" alt="Song image" width="64px" height="64px">
                         
                             <div class="song-artist">
@@ -59,13 +58,13 @@
                             <h3>{{ MINUTES }}:0{{ SECONDS }}</h3>
                         {% endif %}
                     </div>
-                    <a href="/download/{{ song.track.id }}">Download Song</a>
+                    <!-- <a href="/download/{{ song.track.id }}">Download Song</a> -->
                 {% endfor %}
             </div>
         </div>
 
         <div class="download">
-            {{ bool_form.submit_button(class_="download primary") }}
+            <input type="submit" class="download primary">
         </div>
     </form>
 

@@ -1,9 +1,11 @@
 import os
+import zipfile
 
 from flask import Flask, render_template, request, Blueprint, send_from_directory, current_app, request, redirect, url_for
-from spotify_downloader.forms import SpotifySongDownloadForm, SpotifyGetUser, SpotifySongs
+from spotify_downloader.forms import SpotifySongDownloadForm, SpotifyGetUser
 from spotify_downloader import spotify
 from spotify_downloader.spotify_api import sp
+from wtforms import BooleanField
 
 
 main = Blueprint('main', __name__)
@@ -43,13 +45,24 @@ def user_playlist(user_id, playlist_id):
     form = SpotifyGetUser()
     if form.validate_on_submit():
         return redirect(url_for('main.user', user_id=form.user.data))
-
-    bool_form = SpotifySongs()
-    if bool_form.validate_on_submit():
-        print(f"Bool data: {bool_form.selection.data}")
-
-
-    return render_template("user_playlist.html", form=form, bool_form=bool_form, title="playlist", user=user, playlists=playlists, playlist=playlist, page="playlist")
+               
+    song_ids = request.form.getlist('song_choice')
+    if song_ids != []:
+        for song_id in song_ids:
+            download_song(song_id=song_id)  # Downloads song
+    
+        # Zips and returns all the songs
+        zipfolder = zipfile.ZipFile('music.zip', 'w', compression=zipfile.ZIP_STORED)
+        for root, dirs, files in os.walk('.'):
+            for file in files:
+                if file[-3:] == "mp3":
+                    zipfolder.write(file)
+                    print(f"Zipping: {file}")
+            zipfolder.close()
+        
+        return send_from_directory(directory=current_app.config["SONG_LOCATION"], path="music.zip", as_attachment=True)
+   
+    return render_template("user_playlist.html", form=form, title="playlist", user=user, playlists=playlists, playlist=playlist, page="playlist")
 
 @main.route("/download/<string:song_id>", methods=["GET"])
 def download_song(song_id): 
