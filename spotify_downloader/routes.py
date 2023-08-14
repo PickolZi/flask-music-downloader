@@ -14,16 +14,11 @@ main = Blueprint('main', __name__)
 @main.route("/", methods=['GET', 'POST'])
 def home():
     form = SpotifySongDownloadForm()
-    if request.method == "POST" and form.validate_on_submit():
-        print('Validated form...')
-        print('Downloading...')
-        result = spotify.download_song_by_url.delay(form.url.data)
 
-        print(f"Finished Downloading... {result.get()}")
-        return send_from_directory(directory=current_app.config["SONG_LOCATION"], path=f"{result.get()}.mp3", as_attachment=True)
+    if form.validate_on_submit and request.method == "POST":
+        return redirect(url_for('main.user', user_id=form.input.data))
 
-
-    return render_template("index.html", text="Home Page!", form=form)
+    return render_template("home.html", title="Home", form=form)
 
 @main.route("/user/<string:user_id>", methods=["POST", "GET"])
 def user(user_id):
@@ -59,6 +54,12 @@ def user_playlist(user_id, playlist_id):
                     zipfolder.write(file)
                     print(f"Zipping: {file}")
             zipfolder.close()
+
+        # Deletes all mp3s in file
+        for root, dirs, files in os.walk('.'):
+            for file in files:
+                if file[-3:] == "mp3":
+                    os.remove(file)
         
         return send_from_directory(directory=current_app.config["SONG_LOCATION"], path="music.zip", as_attachment=True)
    

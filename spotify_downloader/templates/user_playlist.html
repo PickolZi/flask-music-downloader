@@ -26,12 +26,22 @@
                 </div>
 
             </div>
+
+            <div class="headers">
+                <input type="checkbox" class="toggle-all">
+                <ul>
+                    <li>Title:</li>
+                    <li>Album:</li>
+                    <li>Date Added:</li>
+                    <li>Length:</li>
+                </ul>
+            </div>
             
             <div class="songs">
                 {% for song in playlist.tracks['items'] if song.track.name != ""%}
                     <div class="song">
                         <div class="checkbox-image">
-                            <input type="checkbox" name="song_choice" value="{{song.track.id}}">
+                            <input type="checkbox" name="song_choice" value="{{song.track.id}}" class="other-checkbox">
                             <img src="{{ song.track.album.images[-1].url}}" alt="Song image" width="64px" height="64px">
                         
                             <div class="song-artist">
@@ -68,5 +78,5 @@
         </div>
     </form>
 
-    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock playlist %}  
