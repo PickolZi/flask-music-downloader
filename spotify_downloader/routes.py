@@ -43,6 +43,7 @@ def user_playlist(user_id, playlist_id):
                
     song_ids = request.form.getlist('song_choice')
     if song_ids != []:
+        print(f"song_ids: {song_ids}")
         for song_id in song_ids:
             download_song(song_id=song_id)  # Downloads song
     
@@ -52,7 +53,6 @@ def user_playlist(user_id, playlist_id):
             for file in files:
                 if file[-3:] == "mp3":
                     zipfolder.write(file)
-                    print(f"Zipping: {file}")
             zipfolder.close()
 
         # Deletes all mp3s in file
@@ -64,6 +64,10 @@ def user_playlist(user_id, playlist_id):
         return send_from_directory(directory=current_app.config["SONG_LOCATION"], path="music.zip", as_attachment=True)
    
     return render_template("user_playlist.html", form=form, title="playlist", user=user, playlists=playlists, playlist=playlist, page="playlist")
+
+@main.route("/dir")
+def get_files():
+    return "hello world"
 
 @main.route("/download/<string:song_id>", methods=["GET"])
 def download_song(song_id): 

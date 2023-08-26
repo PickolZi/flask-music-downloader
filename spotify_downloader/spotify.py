@@ -1,10 +1,12 @@
-import os
+import os, json
 from celery import shared_task
 from spotdl import Spotdl
 
-CLIENT_ID = os.environ.get("SPOTIFY_KEY")
-CLIENT_SECRET = os.environ.get("SPOTIFY_SECRET")
+with open("SECRETS.json", "r") as file:
+    SECRETS = json.load(file)
 
+CLIENT_ID = SECRETS.get('SPOTIFY_KEY')
+CLIENT_SECRET = SECRETS.get('SPOTIFY_SECRET')
 
 player = Spotdl(CLIENT_ID, CLIENT_SECRET)
 

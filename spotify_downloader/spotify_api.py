@@ -5,9 +5,11 @@ from spotipy import Spotify
 from spotipy.exceptions import SpotifyException
 from spotipy.oauth2 import SpotifyClientCredentials
 
-CLIENT_ID = os.environ.get("SPOTIFY_KEY")
-CLIENT_SECRET = os.environ.get("SPOTIFY_SECRET")
+with open("SECRETS.json", "r") as file:
+    SECRETS = json.load(file)
 
+CLIENT_ID = SECRETS.get('SPOTIFY_KEY')
+CLIENT_SECRET = SECRETS.get('SPOTIFY_SECRET')
 
 sp = Spotify(client_credentials_manager=SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET))
 
