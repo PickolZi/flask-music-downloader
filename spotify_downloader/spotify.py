@@ -2,6 +2,7 @@ import os, json
 from celery import shared_task
 from spotdl import Spotdl
 
+
 with open("SECRETS.json", "r") as file:
     SECRETS = json.load(file)
 
@@ -18,6 +19,7 @@ def download_song_by_url(self, url):
     song, path = player.download(song[0])
 
     return song_name
+        
 
 def download_playlist_by_url(url):
     songs = player.search([SPOT_PLAYLIST])

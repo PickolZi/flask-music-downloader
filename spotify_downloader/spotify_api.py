@@ -14,16 +14,11 @@ CLIENT_SECRET = SECRETS.get('SPOTIFY_SECRET')
 sp = Spotify(client_credentials_manager=SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET))
 
 
-# Prints dictionary in neat JSON format.
-def pretty_print(my_dict):
-    print(json.dumps(my_dict, indent=2))
-
-
 def return_spotify_user(user_id):
     """ 
         Gets user information using the user's id.
 
-        user_id: Spotify's user id from their website.
+        user_id: Spotify's user id from Spotify's website.
 
         Returns: JSON or None
     """
@@ -34,11 +29,18 @@ def return_spotify_user(user_id):
     
     return user
 
-if __name__ == "__main__":
-    USER_ID = "lclq7kwxx6gwfnk21rp67y0ml"
-    user = sp.user(USER_ID)  # Gets the User's information
-    user_playlists = sp.user_playlists(USER_ID)  # Gets all of the User's playlist and it's info
-    # user_playlist = sp.user_playlist("pickolzhd", playlist_id="3ajkaWGkyGU9HKFozBV1il")  # Gets the user playlist given name and playlist id.
+def return_spotify_user_playlist(user_id, user_playlist):
+    """ 
+        Gets user's playlist information using the user's id and playlist id
 
-    pretty_print(user_playlists)
+        user_id: Spotify's user id from Spotify's website.
+        user_playlist: Spotify's user's playlist id from Spotify's website.
 
+        Returns: JSON or None
+    """
+    try:
+        playlist = sp.user_playlist(user=user_id, playlist_id=user_playlist)
+    except SpotifyException:
+        return None
+        
+    return playlist 

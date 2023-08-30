@@ -1,7 +1,7 @@
 1. Return the mp3 file as a downloadable to the user | COMPLETED
 2. Delete the mp3 file from the file directory
 3. Incorporate Offical Spotify API to use get a user's song/playlist as well as searching for a song. | COMPLETeD
-4. "Pretty" up the front page so it doesn't just look like a mess.
+4. "Pretty" up the front page so it doesn't just look like a mess. | semi-completed
 5. Update Dockerfile(s) to include Flask application, NGINX web server, and gunicorn? 
 6. Find a web hoster to host my web application online.
 7. Link a domain and add SSL certificate.
