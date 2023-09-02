@@ -1,0 +1,146 @@
+.content {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    gap: var(--size-base)
+}
+.main {
+    width: 100%;
+    height: 100%;
+    border-radius: 1em;
+    
+}
+.main__image {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--text);
+    padding-bottom: 1em;
+    position: relative;
+}
+.main__image img {
+    width: 100px;
+    height: 100px;
+}
+.main__info {
+    margin-left: 1em;
+}
+.main__info-title {
+    font-size: var(--size-3xl);
+}
+.main__info-desc {
+    font-size: var(--size-sm);
+}
+.playlists {
+    /* display set to none in in-line property too for js */
+    display: none;  
+    position: absolute;
+    height: 100%;
+    width: 350px;
+    overflow-x: hidden;
+    border-radius: 1em;
+}
+.playlists__new-user {
+    position: sticky;
+    top: 0em;
+    background-color: var(--secondary);
+}
+.playlists__new-user-entry {
+    width: 100%;
+    height: 2rem;
+    margin: 1em 0;
+}
+.playlists__new-user-title {
+    font-size: var(--size-2xl);
+}
+.playlist {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+}
+.playlist:hover {
+    background-color: var(--accent);
+}
+.playlists__icon {
+    width: var(--size-2xl);
+    height: var(--size-2xl);
+    position: absolute;
+    background: rgba(0,0,0,0.85);
+    top: 0.5em;
+    z-index: 999;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+}
+.playlists__icon:hover {
+    transform: translateY(-0.25em);
+}
+.playlists__icon-left {
+    left: 0.5em;
+}
+.playlists__icon-right {
+    right: 0.5em;
+}
+
+/* xs screens */
+@media (min-width: 480px) {
+    .main__image img {
+        width: 200px;
+        height: 200px;
+    }
+    .main__info-title {
+        font-size: var(--size-5xl);
+    }
+    .main__info-desc {
+        font-size: var(--size-xl);
+    }
+    .playlists__icon {
+        width: var(--size-3xl);
+        height: var(--size-3xl);
+    }
+}
+/* sm screens (Phones) */
+@media (min-width: 640px) {
+    .main__image img {
+        width: 300px;
+        height: 300px;
+    }
+    .main__info-title {
+        font-size: var(--size-7xl);
+    }
+    .main__info-desc {
+        font-size: var(--size-xl);
+    }
+    .playlists__icon {
+        width: var(--size-4xl);
+        height: var(--size-4xl);
+    }
+}
+/* md screens (Tablets) */
+/* @media (min-width: 768px) {} */
+/* lg screens */
+@media (min-width: 1024px) {
+    .content {
+        padding: 1em;
+    }
+    .main {
+        padding-top: 1em;
+        padding-right: 1em;
+        padding-left: 1em;
+    }
+    .playlists {
+        display: inline;
+        position: relative;
+    }
+    .playlists__icon {
+        display: none;
+    }
+}
+/* xl screens */
+@media (min-width: 1280px) {
+    .playlists {
+        width: 450px;
+    }
+}
+/* xxl screens */
+/* @media (min-width: 1536px) {} */

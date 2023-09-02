@@ -8,9 +8,14 @@
     {% else %}
         <title>Spotify Music Downloader</title>
     {% endif %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_playlist.css') }}">
 </head>
 <body>
+    <!-- Notifies users of error messages -->
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
@@ -23,5 +28,8 @@
 
     {% block content %}
     {% endblock content %}
+
+    <script src="{{ url_for('static', filename='js/playlists-icon.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/playlist-select.js') }}"></script>
 </body>
 </html>

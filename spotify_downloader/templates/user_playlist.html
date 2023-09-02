@@ -2,81 +2,87 @@
 {% block playlist %}
 
     <form method="POST" class="songs-form">
-        <div class="main-content scrollbar">
-            <div class="main-image">
+        <!-- Main content with Playlist title and all the songs -->
+        <div class="main__content scrollbar">
+            <div class="main__image">
                 {% if playlist.images != [] %}
-                    <img src="{{ playlist.images[0].url }}" alt="Spotify playlist image" width="300px" height="300px">
+                    <img src="{{ playlist.images[0].url }}" alt="Spotify playlist image">
                 {% else %}
-                    <img src="https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=v2" alt="Playlist image" width="300px" height="300px">
+                    <img src="https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=v2" alt="Playlist image">
                 {% endif %}
 
-                <div class="main-info">
-                    <h1><a href="{{ playlist.external_urls.spotify }}" target="_blank">{{ playlist.name }}</a></h1>
-                    <h3>Followers: {{ playlist.followers.total }}</h3>
+                <div class="main__info">
+                    <h1 class="main__info-title"><a href="{{ playlist.external_urls.spotify }}" target="_blank">{{ playlist.name }}</a></h1>
+                    <h3 class="main__info-desc">Followers: {{ playlist.followers.total }}</h3>
                 </div>
 
                 <div class="user-info">
                     <a href="{{ user.external_urls.spotify }}" target="_blank">
                         {% if user.images != [] %}
-                            <img src="{{user.images[0].url}}" alt="Spotify user's image" width="64px" height="64px">
+                            <img src="{{user.images[0].url}}" alt="Spotify user's image">
                         {% else %}
-                            <img src="https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651" alt="Spotify user's image" width="64px" height="64px">
+                            <img src="https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651" alt="Spotify user's image">
                         {% endif %}
                     </a>
                 </div>
 
             </div>
 
+            <!-- Song headers -->
             <div class="headers">
                 <input type="checkbox" class="toggle-all">
                 <ul>
-                    <li>Title:</li>
-                    <li>Album:</li>
-                    <li>Date Added:</li>
-                    <li>Length:</li>
+                    <li class="song__track song-text">Title:</li>
+                    <li class="song__album song-text">Album:</li>
+                    <li class="song__date-added song-text">Date Added:</li>
+                    <li class="song__length song-text">Length:</li>
                 </ul>
             </div>
             
+            <!-- Outputs each song and their info -->
             <div class="songs">
-                {% for song in playlist.tracks['items'] if song.track.name != ""%}
-                    <div class="song">
-                        <div class="checkbox-image">
-                            <input type="checkbox" name="song_choice" value="{{song.track.id}}" class="other-checkbox">
-                            <img src="{{ song.track.album.images[-1].url}}" alt="Song image" width="64px" height="64px">
-                        
-                            <div class="song-artist">
-                                <h3><a href="{{ song.track.external_urls.spotify }}" target="_blank">{{ song.track.name }}</a></h3>
-                                <h3> 
-                                    {% for artist in song.track.album.artists %} 
-                                        {% if artist == song.track.album.artists[-1] %}
-                                            <a href="{{ artist.external_urls.spotify }}" target="_blank">{{ artist.name }}</a>
-                                        {% else %}
-                                            <a href="{{ artist.external_urls.spotify }}" target="_blank">{{ artist.name }}</a> | 
-                                        {% endif %}
-                                    {% endfor %}
-                                </h3>
-                            </div>
+                {% for song in playlist.tracks['items'] if song.track != None %}
+
+                <div class="song">
+                    <div class="song__main-contents">
+                        <input type="checkbox" class="other-checkbox" name="song_choice" value="{{song.track.id}}">
+                        <img class="song__main-contents-img" src="{{ song.track.album.images[-1].url}}" alt="Song image" width="64px" height="64px">
+                    
+                        <div class="song__main-contents-text">
+                            <h3 class="song__track song-text"><a href="{{ song.track.external_urls.spotify }}" target="_blank">{{ song.track.name }}</a></h3>
+                            <h3 class="song__artist song-text"> 
+                                {% for artist in song.track.album.artists %} 
+                                    {% if artist == song.track.album.artists[-1] %}
+                                        <a href="{{ artist.external_urls.spotify }}" target="_blank">{{ artist.name }}</a>
+                                    {% else %}
+                                        <a href="{{ artist.external_urls.spotify }}" target="_blank">{{ artist.name }}</a> | 
+                                    {% endif %}
+                                {% endfor %}
+                            </h3>
                         </div>
-                        <h3><a href="{{ song.track.album.external_urls.spotify }}" target="_blank">{{ song.track.album.name }}</a></h3>
-                        <h3>{{ song.added_at[0:10] }}</h3>
-                        {% set MINUTES = (song.track.duration_ms // 1000) // 60 %}
-                        {% set SECONDS = (song.track.duration_ms // 1000) % 60 %}
-                        {% set SECONDS = SECONDS | string %}
-                        {% if SECONDS | length > 1 %}
-                            <h3>{{ MINUTES }}:{{ SECONDS }}</h3>
-                        {% else %}
-                            <h3>{{ MINUTES }}:0{{ SECONDS }}</h3>
-                        {% endif %}
                     </div>
-                    <!-- <a href="/download/{{ song.track.id }}">Download Song</a> -->
+                    
+                    <h3 class="song__album song-text"><a href="{{ song.track.album.external_urls.spotify }}" target="_blank">{{ song.track.album.name }}</a></h3>
+                    <h3 class="song__date-added song-text">{{ song.added_at[0:10] }}</h3>
+                    {% set MINUTES = (song.track.duration_ms // 1000) // 60 %}
+                    {% set SECONDS = (song.track.duration_ms // 1000) % 60 %}
+                    {% set SECONDS = SECONDS | string %}
+                    {% if SECONDS | length > 1 %}
+                        <h3 class="song__length song-text">{{ MINUTES }}:{{ SECONDS }}</h3>
+                    {% else %}
+                        <h3 class="song__length song-text">{{ MINUTES }}:0{{ SECONDS }}</h3>
+                    {% endif %}
+                </div>
+                    
                 {% endfor %}
             </div>
         </div>
 
+        <!-- Download button to submit spotify song id's to the backend -->
         <div class="download">
-            <input type="submit" class="download primary">
+            <input type="submit" class="download primary" value="Download">
         </div>
     </form>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/playlists-checkboxes.js') }}"></script>
 {% endblock playlist %}  

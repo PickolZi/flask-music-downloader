@@ -108,20 +108,27 @@ def user_playlist(user_id, playlist_id):
 def download_song(song_id): 
     """
     Given the song_id, downloads and then returns the song file.
+    TODO: Turn into API endpoint that can be called. Read Comment at end of function.
     """
     try:
         SPOT_URL = "https://open.spotify.com/track/" + song_id
         result = spotify.download_song_by_url.delay(SPOT_URL)
 
         results = result.get()
-    except SpotifyException:   
-       abort(404)
+    except SpotifyException:
+        abort(404)
 
-    return send_from_directory(directory=current_app.config["SONG_LOCATION"], path=f"{results}.mp3", as_attachment=True)
+    """
+    Had to comment out return function acting as endpoint. Certain songs would not be returned back to the user, my assumption being that the song's title 
+    had special characters that made it difficult to return through the below's path name.
+    """
+    # return send_from_directory(directory=current_app.config["SONG_LOCATION"], path=f"{results}.mp3", as_attachment=True)
 
 def clear_songs_from_directory():
-    # Deletes all downloaded mp3s in the directory
-        for root, dirs, files in os.walk('.'):
-            for file in files:
-                if file[-3:] == "mp3":
-                    os.remove(file)
+    """
+    Deletes all downloaded mp3s in the directory
+    """
+    for root, dirs, files in os.walk('.'):
+        for file in files:
+            if file[-3:] == "mp3":
+                os.remove(file)

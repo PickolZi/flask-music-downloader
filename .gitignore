@@ -1,1 +1,3 @@
 SECRETS.json
+.cache
+spotify_downloader/__pycache__/

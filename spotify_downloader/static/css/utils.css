@@ -1,0 +1,51 @@
+.background {
+    background-color: var(--background);
+}
+.text {
+    background-color: var(--text);
+}
+.primary {
+    background-color: var(--primary);
+}
+.secondary {
+    background-color: var(--secondary);
+}
+.accent {
+    background-color: var(--accent);
+}
+
+.green-highlight {
+    box-shadow: 0 5px 10px rgba(0, 100, 0, 0.05), 0 10px 20px rgba(0, 100, 0, 0.2);
+}
+
+/* Scroll bar styling */
+.scrollbar {
+    overflow-y: auto;
+}
+.scrollbar::-webkit-scrollbar {
+    width: 0.75em;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+}
+.scrollbar::-webkit-scrollbar-track {
+    box-shadow: inset 1px 1px 6px var(--accent);
+  }
+
+/* Content container */
+.content {
+    width: 100%;
+    height: 100vh;
+}
+/* xs screens */
+/* @media (min-width: 480px) {} */
+/* sm screens (Phones) */
+/* @media (min-width: 640px) {} */
+/* md screens (Tablets) */
+/* @media (min-width: 768px) {} */
+/* lg screens */
+/* @media (min-width: 1024px) {} */
+/* xl screens */
+/* @media (min-width: 1280px) {} */
+/* xxl screens */
+/* @media (min-width: 1536px) {} */

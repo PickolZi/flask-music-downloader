@@ -7,4 +7,4 @@ class SpotifySongDownloadForm(FlaskForm):
     submit = SubmitField('Search')
 
 class SpotifyGetUser(FlaskForm):
-    user = StringField('user_id', [data_required()])
+    user = StringField('user_id', [data_required()], render_kw={'placeholder': 'Enter Spotify user id: '})
