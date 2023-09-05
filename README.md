@@ -4,9 +4,9 @@ Using Flask and other Python modules I will be creating a web application that c
 
 &nbsp;
 ## How do I run this web application?
-- First you will have to create a "SECRETS.json" file in the "flask-music-downloader" directory. There should be 3 keys named, "SPOTIFY_FLASK_SECRET_KEY", "SPOTIFY_KEY", "SPOTIFY_SECRET. Which will be your Flask secret key, then the Spotify API Developer key and secret in order. Note you will need an active [Spotify Developer account](https://developer.spotify.com/dashboard) for this. 
-- Next, you're going to have to run the redis database, celery worker, as well as the Flask application I made this easy for us by opening up the terminal and entering `docker compose up` to run all microservices simultaneously.
-- Lastly, type `http://localhost:5000/` to start using my web application!
+- First, you will have to edit the "SAMPLE_SECRETS.json" file, renaming it to "SECRETS.json". There should be 3 keys named, "SPOTIFY_FLASK_SECRET_KEY", "SPOTIFY_KEY", "SPOTIFY_SECRET. Which will be your Flask secret key, then the Spotify API Developer key and secret in order. Note you will need an active [Spotify Developer account](https://developer.spotify.com/dashboard) for this. 
+- Next, you're going to have to run the redis database, celery worker, as well as the gunicorn/NGINX web server application, I made this easy for us by opening up the terminal and entering `docker compose up` to download and run all microservices simultaneously. Note you will need [docker](https://docs.docker.com/get-docker/) installed on your device.
+- Lastly, after all the docker containers are up and running, type `http://localhost` to start using my Spotify Music Downloader web application!
 
 
 &nbsp;
