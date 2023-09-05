@@ -6,4 +6,4 @@ RUN pip install gunicorn
 RUN pip install -r requirements.txt
 # The below command didn't work beause gunicorn was not recognized. Needed to run through a .sh file.
 # CMD ["gunicorn","-w" "3","run:app","--bind" "0.0.0.0:8000"]
-CMD ["./gunicorn/startup.sh"]
+CMD ["bash", "./gunicorn/startup.sh"]

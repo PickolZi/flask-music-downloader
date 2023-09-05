@@ -18,6 +18,8 @@ services:
       - ./spotify_downloader/static:/usr/share/static/
     ports:
       - 80:80
+    depends_on:
+      - gunicorn-server
   # python-run:
   #   build: 
   #     context: .
