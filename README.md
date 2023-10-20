@@ -1,5 +1,9 @@
 # Spotify Music Downloader
-Using Flask and other Python modules I will be creating a web application that can download music from Spotify.
+Using Flask, redis, celery, docker, and Spotify's Developer API to create a web application that can download spotify music for free from any spotify user account.
+
+[Live Demo](http://45.33.33.207/)
+
+Enter `pickolzhd` into the search field to view my playlist
 
 
 &nbsp;
